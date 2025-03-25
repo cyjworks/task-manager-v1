@@ -1,6 +1,6 @@
 package uni.usic.infrastructure.repository;
 
-import uni.usic.application.service.TaskManager;
+import uni.usic.application.service.TaskService;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
@@ -86,7 +86,7 @@ public class TaskFileManager {
 
     public static void sortByDateAsc() {
         Map<String, Task> taskMap = loadTasksFromTemp();
-        List<Task> tasks = TaskManager.convertTaskMapToList(taskMap); // Load tasks from temp file
+        List<Task> tasks = TaskService.convertTaskMapToList(taskMap); // Load tasks from temp file
         tasks.sort(Comparator.comparing(Task::getEndDate)); // Sort in ascending order
 
         // Rewrite sorted tasks back to temp.txt

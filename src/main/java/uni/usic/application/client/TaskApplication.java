@@ -49,7 +49,7 @@ public class TaskApplication {
     }
 
     public static void viewTaskList() {
-        List<Task> taskList = TaskManager.viewTaskList();
+        List<Task> taskList = TaskService.viewTaskList();
         for(Task task : taskList) {
             System.out.println(task.toString());
         }
@@ -80,11 +80,9 @@ public class TaskApplication {
         TaskPriority priority = convertToTaskPriority(priorityStr);
 
         TaskService taskService = new TaskService();
-        Task task = taskService.createTask(title, description, startDate, endDate, priority);
+        Task createdTask = taskService.createTask(title, description, startDate, endDate, priority);
 
-        boolean result = TaskManager.addTask(task);
-
-        if(result) {
+        if(createdTask!=null) {
             System.out.println("Task successfully created.");
         } else {
             System.out.println("Task creation failed.");
@@ -145,7 +143,7 @@ public class TaskApplication {
     }
 
     public static boolean checkIfTaskExists(String id) {
-        return TaskManager.getTaskById(id) != null;
+        return TaskService.getTaskById(id) != null;
     }
 
     public static void checkDateFormat(String dateStr) {
