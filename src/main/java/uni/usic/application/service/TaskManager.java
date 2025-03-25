@@ -1,6 +1,7 @@
 package uni.usic.application.service;
 
 import uni.usic.domain.entity.maintasks.Task;
+import uni.usic.infrastructure.repository.TaskFileRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +26,11 @@ public class TaskManager {
     }
 
     public static boolean addTask(Task task) {
-        taskMap.put(task.getId(), task);
-        Task addedTask = taskMap.get(task.getId());
-        return addedTask != null;
+//        taskMap.put(task.getId(), task);
+//        Task addedTask = taskMap.get(task.getId());
+//        return addedTask != null;
+        TaskFileRepository taskFileRepository = new TaskFileRepository();
+        return taskFileRepository.save(task);
     }
 
     public static boolean removeTask(String id) {

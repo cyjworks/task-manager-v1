@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TaskFileRepository implements TaskRepository {
-    private static final String TASKS_FILE = "tasks.txt";
+    private static final String TASKS_FILE = "src/main/java/uni/usic/infrastructure/storage/tasks.txt";
 
     @Override
     public boolean save(Task task) {
