@@ -17,7 +17,7 @@ public class TaskFileManager {
     private static final String TASKS_FILE = DIRECTORY + "tasks.txt";
     private static final String TEMP_FILE = DIRECTORY + "temp.txt";
 
-    public static void initialiseAfterStart() {
+    public void initialiseAfterStart() {
         try {
             File dir = new File(DIRECTORY);
             if(!dir.exists()) {
@@ -48,7 +48,7 @@ public class TaskFileManager {
         }
     }*/
 
-    public static Map<String, Task> loadTasksFromTemp() {
+    public Map<String, Task> loadTasksFromTemp() {
         Map<String, Task> taskMap = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(TEMP_FILE))) {
             String line;
@@ -65,7 +65,7 @@ public class TaskFileManager {
         return taskMap;
     }
 
-    public static boolean finaliseBeforeExit() {
+    public boolean finaliseBeforeExit() {
         File tempFile = new File(TEMP_FILE);
 
         if(tempFile.exists() || tempFile.length()>0) {
@@ -84,9 +84,10 @@ public class TaskFileManager {
         return file.exists() && file.length() > 0;
     }*/
 
-    public static void sortByDateAsc() {
+    public void sortByDateAsc() {
         Map<String, Task> taskMap = loadTasksFromTemp();
-        List<Task> tasks = TaskService.convertTaskMapToList(taskMap); // Load tasks from temp file
+        TaskService taskService = new TaskService();
+        List<Task> tasks = taskService.convertTaskMapToList(taskMap); // Load tasks from temp file
         tasks.sort(Comparator.comparing(Task::getEndDate)); // Sort in ascending order
 
         // Rewrite sorted tasks back to temp.txt
@@ -100,7 +101,7 @@ public class TaskFileManager {
         }
     }
 
-    public static boolean overwriteToTasks() {
+    public boolean overwriteToTasks() {
         try {
             Files.copy(Paths.get(TEMP_FILE), Paths.get(TASKS_FILE), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Successfully updated tasks.txt from temp.txt.");
@@ -111,7 +112,7 @@ public class TaskFileManager {
         }
     }
 
-    public static void deleteTemp() {
+    public void deleteTemp() {
         try {
             Files.deleteIfExists(Paths.get(TEMP_FILE));
             System.out.println("temp.txt deleted successfully.");
@@ -120,7 +121,7 @@ public class TaskFileManager {
         }
     }
 
-    public static void finaliseTasksBeforeExit() {
+    public void finaliseTasksBeforeExit() {
         try {
             // Read all tasks from temp.txt and sort them
             List<Task> sortedTasks = new ArrayList<>(loadTasksFromTemp().values());
@@ -141,7 +142,7 @@ public class TaskFileManager {
         }
     }
 
-    private static Task stringToTask(String line) {
+    private Task stringToTask(String line) {
         String[] parts = line.split("\\|");
         if (parts.length < 7) return null;
 
@@ -173,7 +174,7 @@ public class TaskFileManager {
 
 
 
-    public static boolean saveTaskListToFile(String filePath, List<Task> taskList) {
+    public boolean saveTaskListToFile(String filePath, List<Task> taskList) {
         try {
             FileWriter writer = new FileWriter(filePath);
             for(Task task : taskList) {
@@ -187,7 +188,7 @@ public class TaskFileManager {
         return false;
     }
 
-    public static String taskToString(Task task) {
+    public String taskToString(Task task) {
         return task.getId() + "|" +
                 task.getTitle() + "|" +
                 task.getDescription() + "|" +

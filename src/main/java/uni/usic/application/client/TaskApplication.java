@@ -1,6 +1,5 @@
 package uni.usic.application.client;
 
-import uni.usic.application.service.TaskManager;
 import uni.usic.application.service.TaskService;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
@@ -49,7 +48,8 @@ public class TaskApplication {
     }
 
     public static void viewTaskList() {
-        List<Task> taskList = TaskService.viewTaskList();
+        TaskService taskService = new TaskService();
+        List<Task> taskList = taskService.viewTaskList();
         for(Task task : taskList) {
             System.out.println(task.toString());
         }
@@ -143,7 +143,8 @@ public class TaskApplication {
     }
 
     public static boolean checkIfTaskExists(String id) {
-        return TaskService.getTaskById(id) != null;
+        TaskService taskService = new TaskService();
+        return taskService.getTaskById(id) != null;
     }
 
     public static void checkDateFormat(String dateStr) {
