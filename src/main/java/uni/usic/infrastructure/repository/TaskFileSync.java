@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.*;
 
-public class TaskFileManager {
+public class TaskFileSync {
     private static final String DIRECTORY = "uni/usic/";
     private static final String TASKS_FILE = DIRECTORY + "tasks.txt";
     private static final String TEMP_FILE = DIRECTORY + "temp.txt";
