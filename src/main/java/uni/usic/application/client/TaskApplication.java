@@ -9,6 +9,7 @@ import uni.usic.infrastructure.repository.TaskFileRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -90,9 +91,9 @@ public class TaskApplication {
     public static void createTask() {
         System.out.println("\n=== Create Task ===");
         System.out.print("Please enter title: ");
-        String title = keyboard.next();
+        String title = keyboard.nextLine();
         System.out.print("Please enter description: ");
-        String description = keyboard.next();
+        String description = keyboard.nextLine();
         System.out.print("Please enter start date (ddMMyyyy): ");
         String startDateStr = keyboard.next();
         System.out.print("Please enter end date (ddMMyyyy): ");
@@ -125,9 +126,9 @@ public class TaskApplication {
         }
 
         System.out.print("Please enter task title: ");
-        String newTitle = keyboard.next();
+        String newTitle = keyboard.nextLine();
         System.out.print("Please enter task description: ");
-        String newDescription = keyboard.next();
+        String newDescription = keyboard.nextLine();
         System.out.print("Please enter start date (ddMMyyyy): ");
         String newStartDateStr = keyboard.next();
         System.out.print("Please enter end date (ddMMyyyy): ");
@@ -174,7 +175,12 @@ public class TaskApplication {
     }
 
     public static LocalDate convertToLocalDate(String dateStr) {
-        return LocalDate.parse(dateStr, formatter);
+//        try {
+            return LocalDate.parse(dateStr, formatter);
+//        } catch (DateTimeParseException e) {
+//            System.out.println("Invalid date format! Please use ddMMyyyy.");
+//            return null;
+//        }
     }
 
     public static TaskPriority convertToTaskPriority(String priorityStr) {
