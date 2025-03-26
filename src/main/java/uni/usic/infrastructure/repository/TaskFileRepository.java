@@ -12,11 +12,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TaskFileRepository implements TaskRepository {
-    private static final String TASKS_FILE = "src/main/java/uni/usic/infrastructure/storage/tasks.txt";
+    private final String filePath;
+
+    public TaskFileRepository(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
     public boolean save(Task task) {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE, true))) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             writer.write(taskToString(task));
             writer.newLine();
             return true;
@@ -62,7 +66,7 @@ public class TaskFileRepository implements TaskRepository {
         List<Task> tasks = loadTaskListFromFile();
         boolean updated = false;
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE))) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for(Task t : tasks) {
                 if(t.getId().equals(task.getId())) {
                     writer.write(taskToString(task));
@@ -82,7 +86,7 @@ public class TaskFileRepository implements TaskRepository {
         List<Task> tasks = loadTaskListFromFile();
         boolean deleted = false;
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE))) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for(Task task : tasks) {
                 if(!task.getId().equals(taskId)) {
                     writer.write(taskToString(task));
@@ -100,7 +104,7 @@ public class TaskFileRepository implements TaskRepository {
     @Override
     public void deleteAll() {
         try{
-            Files.deleteIfExists(Paths.get(TASKS_FILE));
+            Files.deleteIfExists(Paths.get(filePath));
         } catch (IOException e) {
             System.out.println("Error deleting all tasks: " + e.getMessage());
         }
@@ -137,10 +141,10 @@ public class TaskFileRepository implements TaskRepository {
         return task;
     }
 
-    public static List<Task> loadTaskListFromFile() {
+    public List<Task> loadTaskListFromFile() {
         List<Task> tasks = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = stringToTask(line);
@@ -158,9 +162,9 @@ public class TaskFileRepository implements TaskRepository {
         return tasks;
     }
 
-    public static Map<String, Task> loadTaskMapFromFile() {
+    public Map<String, Task> loadTaskMapFromFile() {
         Map<String, Task> taskMap = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = stringToTask(line);

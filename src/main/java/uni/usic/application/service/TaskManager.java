@@ -10,8 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskManager {
-    TaskService taskService = new TaskService();
-    TaskFileRepository taskFileRepository = new TaskFileRepository();
+    private final TaskService taskService;
+    private final TaskFileRepository taskFileRepository;
+
+    public TaskManager(TaskService taskService, TaskFileRepository taskFileRepository) {
+        this.taskService = taskService;
+        this.taskFileRepository = taskFileRepository;
+    }
 
     public List<Task> viewTaskList() {
         return taskFileRepository.loadTaskListFromFile();
@@ -57,7 +62,6 @@ public class TaskManager {
 
     public boolean checkIfTaskExists(String id) {
         Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
-        TaskService taskService = new TaskService();
         return taskService.getTaskById(id, taskMap) != null;
     }
 

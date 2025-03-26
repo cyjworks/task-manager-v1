@@ -1,9 +1,11 @@
 package uni.usic.application.client;
 
 import uni.usic.application.service.TaskManager;
+import uni.usic.application.service.TaskService;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
+import uni.usic.infrastructure.repository.TaskFileRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +15,12 @@ import java.util.Scanner;
 public class TaskApplication {
     private static Scanner keyboard = new Scanner(System.in);
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+    private static final String TASKS_FILE_PATH = "src/main/java/uni/usic/infrastructure/storage/tasks.txt";
+
+    // Dependency Injection
+    private static final TaskFileRepository taskFileRepository = new TaskFileRepository(TASKS_FILE_PATH);
+    private static final TaskService taskService = new TaskService();
+    private static final TaskManager taskManager = new TaskManager(taskService, taskFileRepository);
 
     public static void main(String[] args) {
         System.out.println("Welcome to Task Manager.");
@@ -43,13 +51,22 @@ public class TaskApplication {
                 deleteTask();
                 break;
             default:
-                System.out.println("");
+                System.out.println("Invalid menu");
         }
+
+        // Java 14+
+//        switch (num) {
+//            case 1 -> viewTaskList();
+//            case 2 -> viewTaskDetails();
+//            case 3 -> createTask();
+//            case 4 -> modifyTask();
+//            case 5 -> deleteTask();
+//            default -> System.out.println("Invalid menu");
+//        }
     }
 
     public static void viewTaskList() {
         System.out.println("\n=== View Task List ===");
-        TaskManager taskManager = new TaskManager();
         List<Task> taskList = taskManager.viewTaskList();
         for(Task task : taskList) {
             System.out.println(task.toString() + "\n");
@@ -61,7 +78,6 @@ public class TaskApplication {
         System.out.print("Please enter task ID: ");
         String taskId = keyboard.next();
 
-        TaskManager taskManager = new TaskManager();
         Task searchedTask = taskManager.viewTaskById(taskId);
 
         if(searchedTask!=null) {
@@ -88,7 +104,6 @@ public class TaskApplication {
         LocalDate endDate = convertToLocalDate(endDateStr);
         TaskPriority priority = convertToTaskPriority(priorityStr);
 
-        TaskManager taskManager = new TaskManager();
         Task createdTask = taskManager.createTask(title, description, startDate, endDate, priority);
 
         if(createdTask!=null) {
@@ -103,7 +118,6 @@ public class TaskApplication {
         System.out.print("Please enter task ID to modify: ");
         String taskId = keyboard.next();
 
-        TaskManager taskManager = new TaskManager();
         boolean taskExists = taskManager.checkIfTaskExists(taskId);
         if(!taskExists) {
             System.out.println("No task has found like task ID: " + taskId);
@@ -146,7 +160,6 @@ public class TaskApplication {
 
 //        System.out.println("Are you sure you want to delete " + taskId + "?");
 
-        TaskManager taskManager = new TaskManager();
         boolean result = taskManager.deleteTask(taskId);
 
         if(result) {

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskService implements TaskOperations {
-    //    private static List<Task> taskList = new ArrayList<>();
     private static Map<String, Task> taskMap = new HashMap<>();
 
     @Override
