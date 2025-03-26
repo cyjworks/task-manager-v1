@@ -15,6 +15,11 @@ public class TaskService implements TaskOperations {
     private static Map<String, Task> taskMap = new HashMap<>();
 
     @Override
+    public List<Task> viewTaskList() {
+        return null;
+    }
+
+    @Override
     public void viewTask(String id) {
         Task task = getTaskById(id);
         if(task == null) {
@@ -22,6 +27,22 @@ public class TaskService implements TaskOperations {
             return;
         }
         System.out.println(task.toString());
+    }
+
+    public Task getTaskById(String taskId) {
+        return taskMap.get(taskId);
+    }
+
+    public Task viewTaskById(String id, Map<String, Task> taskMap) {
+        Task task = getTaskById(id, taskMap);
+        if(task == null) {
+            return null;
+        }
+        return task;
+    }
+
+    public Task getTaskById(String taskId, Map<String, Task> taskMap) {
+        return taskMap.get(taskId.trim());
     }
 
     @Override
@@ -61,17 +82,9 @@ public class TaskService implements TaskOperations {
         return removeTask(id);
     }
 
-    public List<Task> viewTaskList() {
-        return new ArrayList<>(taskMap.values());
-    }
-
     // TODO: getTaskList()?
     public List<Task> convertTaskMapToList(Map<String, Task> taskMap) {
         return new ArrayList<>(taskMap.values()); // Convert map values to list
-    }
-
-    public Task getTaskById(String taskId) {
-        return taskMap.get(taskId);
     }
 
 

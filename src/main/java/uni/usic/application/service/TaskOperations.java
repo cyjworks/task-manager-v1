@@ -5,8 +5,10 @@ import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface TaskOperations {
+    List<Task> viewTaskList();
     void viewTask(String id);
     Task createTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority);
     Task modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore);

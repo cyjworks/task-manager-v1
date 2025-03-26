@@ -58,7 +58,7 @@ public class TaskFileSync {
                     taskMap.put(task.getId(), task);
                 }
             }
-            System.out.println("Tasks loaded from temp file.");
+//            System.out.println("Tasks loaded from temp file.");
         } catch (IOException e) {
             System.out.println("No previous tasks found.");
         }

@@ -128,12 +128,12 @@ public class TaskFileRepository implements TaskRepository {
         LocalDate endDate = LocalDate.parse(parts[4]);
         TaskPriority priority = TaskPriority.valueOf(parts[5]);
         TaskProgress progress = TaskProgress.valueOf(parts[6]);
-        Integer reminderDaysBefore = parts[7].isEmpty() ? null : Integer.parseInt(parts[7]);
+//        Integer reminderDaysBefore = parts[7].isEmpty() ? null : Integer.parseInt(parts[7]);
 
         Task task = new Task(title, description, startDate, endDate, priority);
         task.setId(id); // Assuming Task has a setter for ID
         task.setProgress(progress);
-        task.setReminderDaysBefore(reminderDaysBefore);
+//        task.setReminderDaysBefore(reminderDaysBefore);
         return task;
     }
 
@@ -148,7 +148,7 @@ public class TaskFileRepository implements TaskRepository {
                     tasks.add(task);
                 }
             }
-            System.out.println("✅ Loaded " + tasks.size() + " tasks from file.");
+//            System.out.println("✅ Loaded " + tasks.size() + " tasks from file.");
         } catch (FileNotFoundException e) {
             System.out.println("No tasks file found. Creating a new one...");
         } catch (IOException e) {
@@ -168,7 +168,7 @@ public class TaskFileRepository implements TaskRepository {
                     taskMap.put(task.getId(), task);
                 }
             }
-            System.out.println("Tasks loaded successfully.");
+//            System.out.println("Tasks loaded successfully.");
         } catch (IOException e) {
             System.out.println("No previous tasks found or error loading file.");
         }

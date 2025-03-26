@@ -1,5 +1,6 @@
 package uni.usic.application.client;
 
+import uni.usic.application.service.TaskManager;
 import uni.usic.application.service.TaskService;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
@@ -48,22 +49,31 @@ public class TaskApplication {
     }
 
     public static void viewTaskList() {
-        TaskService taskService = new TaskService();
-        List<Task> taskList = taskService.viewTaskList();
+        System.out.println("\n=== View Task List ===");
+        TaskManager taskManager = new TaskManager();
+        List<Task> taskList = taskManager.viewTaskList();
         for(Task task : taskList) {
-            System.out.println(task.toString());
+            System.out.println(task.toString() + "\n");
         }
     }
 
     public static void viewTaskDetails() {
+        System.out.println("\n=== View Task Details ===");
         System.out.print("Please enter task ID: ");
         String taskId = keyboard.next();
 
-        TaskService taskService = new TaskService();
-        taskService.viewTask(taskId);
+        TaskManager taskManager = new TaskManager();
+        Task searchedTask = taskManager.viewTaskById(taskId);
+
+        if(searchedTask!=null) {
+            System.out.println("\n"+searchedTask.toString());
+        } else {
+            System.out.println("No task has found like task ID: " + taskId);
+        }
     }
 
     public static void createTask() {
+        System.out.println("\n=== Create Task ===");
         System.out.print("Please enter title: ");
         String title = keyboard.next();
         System.out.print("Please enter description: ");
@@ -90,6 +100,7 @@ public class TaskApplication {
     }
 
     public static void modifyTask() {
+        System.out.println("\n=== Modify Task ===");
         System.out.print("Please enter task ID to modify: ");
         String taskId = keyboard.next();
 
@@ -132,6 +143,7 @@ public class TaskApplication {
     }
 
     public static void deleteTask() {
+        System.out.println("\n=== Delete Task ===");
         System.out.print("Please enter task ID to delete: ");
         String taskId = keyboard.next();
 

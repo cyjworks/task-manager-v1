@@ -6,14 +6,26 @@ import uni.usic.domain.enums.TaskProgress;
 import uni.usic.infrastructure.repository.TaskFileRepository;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class TaskManager implements TaskOperations {
     TaskService taskService = new TaskService();
     TaskFileRepository taskFileRepository = new TaskFileRepository();
 
     @Override
-    public void viewTask(String id) {
+    public List<Task> viewTaskList() {
+        return taskFileRepository.loadTaskListFromFile();
+    }
 
+    @Override
+    public void viewTask(String id) {
+        taskFileRepository.findById(id);
+    }
+
+    public Task viewTaskById(String id) {
+        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
+        return taskService.viewTaskById(id, taskMap);
     }
 
     @Override

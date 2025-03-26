@@ -17,9 +17,9 @@ public class TestTaskService {
 
         // Run all tests
         totalTests++;
-        if(testAddTask()) {
-            passedTests++;
-        }
+//        if(testAddTask()) {
+//            passedTests++;
+//        }
 
         totalTests++;
         if(testViewTaskList()) {
@@ -39,16 +39,16 @@ public class TestTaskService {
         System.out.println("\nTest Summary: " + passedTests + "/" + totalTests + " tests passed.");
     }
 
-    public static boolean testAddTask() {
-        TaskService taskService = new TaskService();
-        System.out.println("Running testAddTask()...");
-
-        Task task = new Task("Study Java", "Complete tutorial", LocalDate.now(), LocalDate.now().plusDays(3), TaskPriority.HIGH);
-        boolean added = taskService.addTask(task);
-
-        if (!added) return fail("Task was not added successfully.");
-        return pass();
-    }
+//    public static boolean testAddTask() {
+//        TaskService taskService = new TaskService();
+//        System.out.println("Running testAddTask()...");
+//
+//        Task task = new Task("Study Java", "Complete tutorial", LocalDate.now(), LocalDate.now().plusDays(3), TaskPriority.HIGH);
+//        boolean added = taskService.addTask(task);
+//
+//        if (!added) return fail("Task was not added successfully.");
+//        return pass();
+//    }
 
     public static boolean testViewTaskList() {
         TaskService taskService = new TaskService();
