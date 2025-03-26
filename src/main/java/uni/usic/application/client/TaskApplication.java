@@ -104,14 +104,7 @@ public class TaskApplication {
         System.out.print("Please enter task ID to modify: ");
         String taskId = keyboard.next();
 
-        boolean taskExists = checkIfTaskExists(taskId);
-        if(!taskExists) {
-            System.out.println("No task has found like task ID: " + taskId);
-            return;
-        }
-
-        TaskService taskService = new TaskService();
-        taskService.viewTask(taskId);
+        TaskManager taskManager = new TaskManager();
 
         System.out.print("Please enter task title: ");
         String newTitle = keyboard.next();
@@ -123,9 +116,9 @@ public class TaskApplication {
         String newEndDateStr = keyboard.next();
         System.out.print("Please enter priority: ");
         String newPriorityStr = keyboard.next();
-        System.out.print("Please enter priority: ");
+        System.out.print("Please enter progress: ");
         String newProgressStr = keyboard.next();
-        System.out.print("Please enter priority: ");
+        System.out.print("Please enter reminder days before: ");
         int newReminderDaysBefore = keyboard.nextInt();
 
         LocalDate newStartDate = convertToLocalDate(newStartDateStr);
@@ -133,7 +126,7 @@ public class TaskApplication {
         TaskPriority newPriority = convertToTaskPriority(newPriorityStr);
         TaskProgress newProgress = convertToTaskProgress(newProgressStr);
 
-        Task modifiedTask = taskService.modifyTask(taskId, newTitle, newDescription, newStartDate, newEndDate, newPriority, newProgress, newReminderDaysBefore);
+        Task modifiedTask = taskManager.modifyTask(taskId, newTitle, newDescription, newStartDate, newEndDate, newPriority, newProgress, newReminderDaysBefore);
 
         if(modifiedTask!=null) {
             System.out.println("Task successfully modified.");
@@ -146,17 +139,6 @@ public class TaskApplication {
         System.out.println("\n=== Delete Task ===");
         System.out.print("Please enter task ID to delete: ");
         String taskId = keyboard.next();
-
-        boolean taskExists = checkIfTaskExists(taskId);
-        if(!taskExists) {
-            System.out.println("No task has found like task ID: " + taskId);
-            return;
-        }
-    }
-
-    public static boolean checkIfTaskExists(String id) {
-        TaskService taskService = new TaskService();
-        return taskService.getTaskById(id) != null;
     }
 
     public static void checkDateFormat(String dateStr) {

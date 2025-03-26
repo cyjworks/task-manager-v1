@@ -51,11 +51,7 @@ public class TaskService implements TaskOperations {
     }
 
     @Override
-    public Task modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
-        Task task = getTaskById(id);
-        if(task == null) {
-            return null;
-        }
+    public Task modifyTask(Task task, String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
         task.setTitle(title);
         task.setDescription(description);
         task.setStartDate(startDate);
@@ -63,7 +59,6 @@ public class TaskService implements TaskOperations {
         task.setPriority(priority);
         task.setProgress(progress);
         task.setReminderDaysBefore(reminderDaysBefore);
-
         return task;
     }
 

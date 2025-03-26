@@ -9,16 +9,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public class TaskManager implements TaskOperations {
+public class TaskManager {
     TaskService taskService = new TaskService();
     TaskFileRepository taskFileRepository = new TaskFileRepository();
 
-    @Override
     public List<Task> viewTaskList() {
         return taskFileRepository.loadTaskListFromFile();
     }
 
-    @Override
     public void viewTask(String id) {
         taskFileRepository.findById(id);
     }
@@ -28,7 +26,6 @@ public class TaskManager implements TaskOperations {
         return taskService.viewTaskById(id, taskMap);
     }
 
-    @Override
     public Task createTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
         Task task = taskService.createTask(title, description, startDate, endDate, priority);
         boolean result = taskFileRepository.save(task);
@@ -40,25 +37,43 @@ public class TaskManager implements TaskOperations {
         }
     }
 
-    @Override
     public Task modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
-        Task task = taskService.modifyTask(id, title, description, startDate, endDate, priority, progress, reminderDaysBefore);
-        boolean result = taskFileRepository.update(task);
+        boolean taskExists = checkIfTaskExists(id);
+        if(!taskExists) {
+            System.out.println("No task has found like task ID: " + id);
+            return null;
+        }
+        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
+
+        Task task = taskService.getTaskById(id, taskMap);
+
+        Task modifiedTask = taskService.modifyTask(task, id, title, description, startDate, endDate, priority, progress, reminderDaysBefore);
+        boolean result = taskFileRepository.update(modifiedTask);
 
         if(result) {
-            return task;
+            return modifiedTask;
         } else {
             return null;
         }
     }
 
-    @Override
+    public boolean checkIfTaskExists(String id) {
+        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
+        TaskService taskService = new TaskService();
+        return taskService.getTaskById(id, taskMap) != null;
+    }
+
     public boolean updateProgress(String id, TaskProgress progress) {
         return false;
     }
 
-    @Override
     public boolean deleteTask(String id) {
-        return false;
+        boolean taskExists = checkIfTaskExists(id);
+        if(!taskExists) {
+            System.out.println("No task has found like task ID: " + id);
+            return false;
+        }
+
+        return true;
     }
 }
