@@ -1,7 +1,6 @@
 package uni.usic.application.client;
 
 import uni.usic.application.service.TaskManager;
-import uni.usic.application.service.TaskService;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
@@ -89,8 +88,8 @@ public class TaskApplication {
         LocalDate endDate = convertToLocalDate(endDateStr);
         TaskPriority priority = convertToTaskPriority(priorityStr);
 
-        TaskService taskService = new TaskService();
-        Task createdTask = taskService.createTask(title, description, startDate, endDate, priority);
+        TaskManager taskManager = new TaskManager();
+        Task createdTask = taskManager.createTask(title, description, startDate, endDate, priority);
 
         if(createdTask!=null) {
             System.out.println("Task successfully created.");
@@ -105,6 +104,11 @@ public class TaskApplication {
         String taskId = keyboard.next();
 
         TaskManager taskManager = new TaskManager();
+        boolean taskExists = taskManager.checkIfTaskExists(taskId);
+        if(!taskExists) {
+            System.out.println("No task has found like task ID: " + taskId);
+            return;
+        }
 
         System.out.print("Please enter task title: ");
         String newTitle = keyboard.next();

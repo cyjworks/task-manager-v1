@@ -38,16 +38,14 @@ public class TaskManager {
     }
 
     public Task modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
-        boolean taskExists = checkIfTaskExists(id);
-        if(!taskExists) {
+        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
+        Task taskToModify = taskService.getTaskById(id, taskMap);
+        if(taskToModify==null) {
             System.out.println("No task has found like task ID: " + id);
             return null;
         }
-        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
 
-        Task task = taskService.getTaskById(id, taskMap);
-
-        Task modifiedTask = taskService.modifyTask(task, id, title, description, startDate, endDate, priority, progress, reminderDaysBefore);
+        Task modifiedTask = taskService.modifyTask(taskToModify, id, title, description, startDate, endDate, priority, progress, reminderDaysBefore);
         boolean result = taskFileRepository.update(modifiedTask);
 
         if(result) {

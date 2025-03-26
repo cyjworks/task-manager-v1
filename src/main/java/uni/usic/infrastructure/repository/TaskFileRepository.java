@@ -114,7 +114,7 @@ public class TaskFileRepository implements TaskRepository {
                 task.getEndDate() + "|" +
                 task.getPriority() + "|" +
                 task.getProgress() + "|" +
-                (task.getReminderDaysBefore() == null ? "" : task.getReminderDaysBefore());
+                (task.getReminderDaysBefore() == null ? "" : task.getReminderDaysBefore()) + "|";
     }
 
     private static Task stringToTask(String line) {
