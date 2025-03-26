@@ -72,8 +72,9 @@ public class TaskFileRepository implements TaskRepository {
                     writer.write(taskToString(task));
                     updated = true;
                 } else {
-                    writer.newLine();
+                    writer.write(taskToString(t));
                 }
+                writer.newLine();
             }
         } catch (IOException e) {
             return false;
