@@ -3,7 +3,6 @@ package uni.usic.application.service;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
-import uni.usic.infrastructure.repository.TaskFileRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,26 +26,14 @@ public class TaskService implements TaskOperations {
 
     @Override
     public Task createTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        Task task = new Task(title, description, startDate, endDate, priority);
-        boolean result = addTask(task);
-
-        if(result) {
-            return task;
-        } else {
-            return null;
-        }
-    }
-
-    public boolean addTask(Task task) {
-        TaskFileRepository taskFileRepository = new TaskFileRepository();
-        return taskFileRepository.save(task);
+        return new Task(title, description, startDate, endDate, priority);
     }
 
     @Override
-    public boolean modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
+    public Task modifyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority, TaskProgress progress, Integer reminderDaysBefore) {
         Task task = getTaskById(id);
         if(task == null) {
-            return false;
+            return null;
         }
         task.setTitle(title);
         task.setDescription(description);
@@ -55,7 +42,8 @@ public class TaskService implements TaskOperations {
         task.setPriority(priority);
         task.setProgress(progress);
         task.setReminderDaysBefore(reminderDaysBefore);
-        return true;
+
+        return task;
     }
 
     @Override

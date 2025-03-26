@@ -8,9 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TaskFileRepository implements TaskRepository {
@@ -29,12 +27,12 @@ public class TaskFileRepository implements TaskRepository {
 
     @Override
     public List<Task> findAll() {
-        return loadTasksFromFile();
+        return loadTaskListFromFile();
     }
 
     @Override
     public Optional<Task> findById(String taskId) {
-        return loadTasksFromFile().stream()
+        return loadTaskListFromFile().stream()
                 .filter(task -> task.getId().equals(taskId))
                 .findFirst();
 //        return Optional.empty();
@@ -42,14 +40,14 @@ public class TaskFileRepository implements TaskRepository {
 
     @Override
     public List<Task> findByPriority(TaskPriority priority) {
-        return loadTasksFromFile().stream()
+        return loadTaskListFromFile().stream()
                 .filter(task -> task.getPriority().equals(priority))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Task> findByProgress(TaskProgress progress) {
-        return loadTasksFromFile().stream()
+        return loadTaskListFromFile().stream()
                 .filter(task -> task.getProgress().equals(progress))
                 .collect(Collectors.toList());
     }
@@ -61,7 +59,7 @@ public class TaskFileRepository implements TaskRepository {
 
     @Override
     public boolean update(Task task) {
-        List<Task> tasks = loadTasksFromFile();
+        List<Task> tasks = loadTaskListFromFile();
         boolean updated = false;
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE))) {
@@ -81,7 +79,7 @@ public class TaskFileRepository implements TaskRepository {
 
     @Override
     public boolean deleteById(String taskId) {
-        List<Task> tasks = loadTasksFromFile();
+        List<Task> tasks = loadTaskListFromFile();
         boolean deleted = false;
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE))) {
@@ -139,7 +137,7 @@ public class TaskFileRepository implements TaskRepository {
         return task;
     }
 
-    public static List<Task> loadTasksFromFile() {
+    public static List<Task> loadTaskListFromFile() {
         List<Task> tasks = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))) {
@@ -158,6 +156,23 @@ public class TaskFileRepository implements TaskRepository {
         }
 
         return tasks;
+    }
+
+    public static Map<String, Task> loadTaskMapFromFile() {
+        Map<String, Task> taskMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Task task = stringToTask(line);
+                if (task != null) {
+                    taskMap.put(task.getId(), task);
+                }
+            }
+            System.out.println("Tasks loaded successfully.");
+        } catch (IOException e) {
+            System.out.println("No previous tasks found or error loading file.");
+        }
+        return taskMap;
     }
 
 }

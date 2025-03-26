@@ -122,9 +122,9 @@ public class TaskApplication {
         TaskPriority newPriority = convertToTaskPriority(newPriorityStr);
         TaskProgress newProgress = convertToTaskProgress(newProgressStr);
 
-        boolean result = taskService.modifyTask(taskId, newTitle, newDescription, newStartDate, newEndDate, newPriority, newProgress, newReminderDaysBefore);
+        Task modifiedTask = taskService.modifyTask(taskId, newTitle, newDescription, newStartDate, newEndDate, newPriority, newProgress, newReminderDaysBefore);
 
-        if(result) {
+        if(modifiedTask!=null) {
             System.out.println("Task successfully modified.");
         } else {
             System.out.println("Task modification failed.");
