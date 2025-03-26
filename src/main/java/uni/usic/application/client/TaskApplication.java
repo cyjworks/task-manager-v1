@@ -143,6 +143,17 @@ public class TaskApplication {
         System.out.println("\n=== Delete Task ===");
         System.out.print("Please enter task ID to delete: ");
         String taskId = keyboard.next();
+
+//        System.out.println("Are you sure you want to delete " + taskId + "?");
+
+        TaskManager taskManager = new TaskManager();
+        boolean result = taskManager.deleteTask(taskId);
+
+        if(result) {
+            System.out.println("Task successfully deleted.");
+        } else {
+            System.out.println("Task deletion failed.");
+        }
     }
 
     public static void checkDateFormat(String dateStr) {

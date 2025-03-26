@@ -72,6 +72,6 @@ public class TaskManager {
             return false;
         }
 
-        return true;
+        return taskFileRepository.deleteById(id);
     }
 }
