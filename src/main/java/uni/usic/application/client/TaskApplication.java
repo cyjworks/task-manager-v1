@@ -90,16 +90,18 @@ public class TaskApplication {
 
     public static void createTask() {
         System.out.println("\n=== Create Task ===");
+
+        keyboard.nextLine();
         System.out.print("Please enter title: ");
         String title = keyboard.nextLine();
         System.out.print("Please enter description: ");
         String description = keyboard.nextLine();
         System.out.print("Please enter start date (ddMMyyyy): ");
-        String startDateStr = keyboard.next();
+        String startDateStr = keyboard.nextLine();
         System.out.print("Please enter end date (ddMMyyyy): ");
-        String endDateStr = keyboard.next();
+        String endDateStr = keyboard.nextLine();
         System.out.print("Please enter priority(high, medium, low): ");
-        String priorityStr = keyboard.next();
+        String priorityStr = keyboard.nextLine();
 
         LocalDate startDate = convertToLocalDate(startDateStr);
         LocalDate endDate = convertToLocalDate(endDateStr);
@@ -125,20 +127,21 @@ public class TaskApplication {
             return;
         }
 
+        keyboard.nextLine();
         System.out.print("Please enter task title: ");
         String newTitle = keyboard.nextLine();
         System.out.print("Please enter task description: ");
         String newDescription = keyboard.nextLine();
         System.out.print("Please enter start date (ddMMyyyy): ");
-        String newStartDateStr = keyboard.next();
+        String newStartDateStr = keyboard.nextLine();
         System.out.print("Please enter end date (ddMMyyyy): ");
-        String newEndDateStr = keyboard.next();
+        String newEndDateStr = keyboard.nextLine();
         System.out.print("Please enter priority: ");
-        String newPriorityStr = keyboard.next();
+        String newPriorityStr = keyboard.nextLine();
         System.out.print("Please enter progress: ");
-        String newProgressStr = keyboard.next();
+        String newProgressStr = keyboard.nextLine();
         System.out.print("Please enter reminder days before: ");
-        int newReminderDaysBefore = keyboard.nextInt();
+        int newReminderDaysBefore = Integer.parseInt(keyboard.nextLine());
 
         LocalDate newStartDate = convertToLocalDate(newStartDateStr);
         LocalDate newEndDate = convertToLocalDate(newEndDateStr);
