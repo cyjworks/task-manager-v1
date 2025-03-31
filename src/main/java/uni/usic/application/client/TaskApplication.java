@@ -20,7 +20,7 @@ public class TaskApplication {
 
     // Dependency Injection
     private static final TaskFileRepository taskFileRepository = new TaskFileRepository(TASKS_FILE_PATH);
-    private static final TaskService taskService = new TaskService();
+    private static final TaskService taskService = new TaskService(TASKS_FILE_PATH);
     private static final TaskManager taskManager = new TaskManager(taskService, taskFileRepository);
 
     public static void main(String[] args) {

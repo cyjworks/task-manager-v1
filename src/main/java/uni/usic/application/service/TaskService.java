@@ -13,6 +13,11 @@ import java.util.Map;
 
 public class TaskService implements TaskOperations {
     private static Map<String, Task> taskMap = new HashMap<>();
+    private final String filePath;
+
+    public TaskService(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
     public List<Task> viewTaskList() {
@@ -47,7 +52,8 @@ public class TaskService implements TaskOperations {
 
     @Override
     public Task createTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        String id = TaskIdGenerator.generateId();
+        TaskIdGenerator taskIdGenerator = new TaskIdGenerator(filePath);
+        String id = taskIdGenerator.generateId();
         return new Task(id, title, description, startDate, endDate, priority);
     }
 

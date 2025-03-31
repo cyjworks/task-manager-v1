@@ -86,7 +86,7 @@ public class TaskFileSync {
 
     public void sortByDateAsc() {
         Map<String, Task> taskMap = loadTasksFromTemp();
-        TaskService taskService = new TaskService();
+        TaskService taskService = new TaskService(TEMP_FILE);   // TODO: the parameter is not needed in this case
         List<Task> tasks = taskService.convertTaskMapToList(taskMap); // Load tasks from temp file
         tasks.sort(Comparator.comparing(Task::getEndDate)); // Sort in ascending order
 

@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TestTaskService {
+    private static final String TEST_TASKS_FILE_PATH = "src/main/java/uni/usic/infrastructure/storage/test_tasks.txt";
+
     public static void main(String[] args) {
 
 
@@ -51,7 +53,7 @@ public class TestTaskService {
 //    }
 
     public static boolean testViewTaskList() {
-        TaskService taskService = new TaskService();
+        TaskService taskService = new TaskService(TEST_TASKS_FILE_PATH);
         System.out.println("Running testViewTaskList()...");
 
         List<Task> tasks = taskService.viewTaskList();
@@ -61,7 +63,7 @@ public class TestTaskService {
     }
 
     public static boolean testGetTaskById() {
-        TaskService taskService = new TaskService();
+        TaskService taskService = new TaskService(TEST_TASKS_FILE_PATH);
         System.out.println("Running testGetTaskById()...");
 
         Task task = taskService.getTaskById("TASK-1");
@@ -70,7 +72,7 @@ public class TestTaskService {
     }
 
     public static boolean testRemoveTask() {
-        TaskService taskService = new TaskService();
+        TaskService taskService = new TaskService(TEST_TASKS_FILE_PATH);
         System.out.println("Running testRemoveTask()...");
 
         boolean removed = taskService.removeTask("TASK-1");

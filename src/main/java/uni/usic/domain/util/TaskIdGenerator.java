@@ -8,9 +8,11 @@ import java.util.List;
 public class TaskIdGenerator {
     private static int currentId = 1;
     private static final String PREFIX = "TASK";
+    private final String filePath;
 
-    private static final String TASKS_FILE_PATH = "src/main/java/uni/usic/infrastructure/storage/tasks.txt";
-    private static final TaskFileRepository taskFileRepository = new TaskFileRepository(TASKS_FILE_PATH);
+    public TaskIdGenerator(String filePath) {
+        this.filePath = filePath;
+    }
 
     public static void initialise(List<Task> tasks) {
         int max = tasks.stream()
@@ -22,7 +24,8 @@ public class TaskIdGenerator {
         currentId = max + 1;
     }
 
-    public static String generateId() {
+    public String generateId() {
+        TaskFileRepository taskFileRepository = new TaskFileRepository(filePath);
         List<Task> existingTasks = taskFileRepository.loadTaskListFromFile();
         TaskIdGenerator.initialise(existingTasks);
         return PREFIX + "-" + currentId++;
