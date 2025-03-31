@@ -38,13 +38,14 @@ public class TestTask {
     public static boolean testCreateTask() {
         System.out.println("Running testCreateTask()...");
 
+        String id = "TEST-1";
         String title = "Study Java";
         String description = "Complete inheritance tutorial";
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(3);
         TaskPriority priority = TaskPriority.HIGH;
 
-        Task task = new Task(title, description, startDate, endDate, priority);
+        Task task = new Task(id, title, description, startDate, endDate, priority);
 
         if(!task.getTitle().equals(title)) return fail("Title is incorrect.");
         if(!task.getDescription().equals(description)) return fail("Description is incorrect.");
@@ -64,13 +65,14 @@ public class TestTask {
     public static boolean testSetTaskReminder() {
         System.out.println("Running testSetTaskReminder()...");
 
+        String id = "TEST-1";
         String title = "Prepare Report";
         String description = "Write quarterly report";
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusDays(5);
         TaskPriority priority = TaskPriority.MEDIUM;
 
-        Task task = new Task(title, description, startDate, endDate, priority);
+        Task task = new Task(id, title, description, startDate, endDate, priority);
 
         task.setTaskReminder(2);
         if(!task.getReminderDaysBefore().equals(2)) return fail("Reminder days before was not set correctly.");
@@ -81,13 +83,14 @@ public class TestTask {
     public static boolean testIsReminderDue() {
         System.out.println("Running testIsReminderDue()...");
 
+        String id = "TEST-1";
         String title = "Workout";
         String description = "Exercise for 30 mins";
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusDays(2);
         TaskPriority priority = TaskPriority.LOW;
 
-        Task task = new Task(title, description, startDate, endDate, priority);
+        Task task = new Task(id, title, description, startDate, endDate, priority);
 
         task.setTaskReminder(2);
 

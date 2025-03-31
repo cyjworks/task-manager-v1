@@ -155,7 +155,7 @@ public class TaskFileSync {
         TaskProgress progress = TaskProgress.valueOf(parts[6]);
         Integer reminderDaysBefore = parts[7].isEmpty() ? null : Integer.parseInt(parts[7]);
 
-        Task task = new Task(title, description, startDate, endDate, priority);
+        Task task = new Task(id, title, description, startDate, endDate, priority);
         task.setId(id);
         task.setProgress(progress);
         task.setReminderDaysBefore(reminderDaysBefore);

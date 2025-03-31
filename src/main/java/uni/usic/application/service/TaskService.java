@@ -3,6 +3,7 @@ package uni.usic.application.service;
 import uni.usic.domain.entity.maintasks.Task;
 import uni.usic.domain.enums.TaskPriority;
 import uni.usic.domain.enums.TaskProgress;
+import uni.usic.domain.util.TaskIdGenerator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ public class TaskService implements TaskOperations {
 
     @Override
     public Task createTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        return new Task(title, description, startDate, endDate, priority);
+        String id = TaskIdGenerator.generateId();
+        return new Task(id, title, description, startDate, endDate, priority);
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class CurrentJobTask extends WorkTask {
     private LocalDate deadline;
 
-    public CurrentJobTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        super(title, description, startDate, endDate, priority);
+    public CurrentJobTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
+        super(id, title, description, startDate, endDate, priority);
     }
 }

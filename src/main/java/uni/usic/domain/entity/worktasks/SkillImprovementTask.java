@@ -11,7 +11,7 @@ public class SkillImprovementTask extends WorkTask {
     private String targetLevel;
     private int progressPercentage;
 
-    public SkillImprovementTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        super(title, description, startDate, endDate, priority);
+    public SkillImprovementTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
+        super(id, title, description, startDate, endDate, priority);
     }
 }

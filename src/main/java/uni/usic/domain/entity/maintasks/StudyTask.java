@@ -9,8 +9,8 @@ public class StudyTask extends Task {
     private String studyType;
     private int estimateTime;
 
-    public StudyTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        super(title, description, startDate, endDate, priority);
+    public StudyTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
+        super(id, title, description, startDate, endDate, priority);
     }
 
     public void startStudying() {

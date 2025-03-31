@@ -6,9 +6,6 @@ import uni.usic.domain.enums.TaskProgress;
 import java.time.LocalDate;
 
 public class Task {
-    private static int nextId = 0;
-    private static final String ID_PREFIX = "TASK";
-
     private String id;
     private String title;
     private String description;
@@ -18,8 +15,8 @@ public class Task {
     private TaskProgress progress;
     private Integer reminderDaysBefore;
 
-    public Task(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        this.id = ID_PREFIX+"-"+nextId++;
+    public Task(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.startDate = startDate;

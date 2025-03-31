@@ -11,7 +11,7 @@ public class JobApplicationTask extends WorkTask {
     private String status;
     private LocalDate interviewDate;
 
-    public JobApplicationTask(String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
-        super(title, description, startDate, endDate, priority);
+    public JobApplicationTask(String id, String title, String description, LocalDate startDate, LocalDate endDate, TaskPriority priority) {
+        super(id, title, description, startDate, endDate, priority);
     }
 }
