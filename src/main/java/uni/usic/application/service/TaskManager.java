@@ -66,7 +66,21 @@ public class TaskManager {
     }
 
     public boolean updateProgress(String id, TaskProgress progress) {
-        return false;
+        Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
+        Task taskToModify = taskService.getTaskById(id, taskMap);
+        if(taskToModify==null) {
+            System.out.println("No task has found like task ID: " + id);
+            return false;
+        }
+
+        Task modifiedTask = taskService.updateProgress(taskToModify, id,  progress);
+        boolean result = taskFileRepository.update(modifiedTask);
+
+        if(result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean deleteTask(String id) {

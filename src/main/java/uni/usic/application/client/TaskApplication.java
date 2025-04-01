@@ -30,7 +30,8 @@ public class TaskApplication {
         System.out.println("2. View task details");
         System.out.println("3. Create task");
         System.out.println("4. Modify task");
-        System.out.println("5. Delete task");
+        System.out.println("5. Update progress");
+        System.out.println("6. Delete task");
 
         System.out.print("Please select menu: ");
         int num = keyboard.nextInt();
@@ -49,6 +50,9 @@ public class TaskApplication {
                 modifyTask();
                 break;
             case 5:
+                updateProgress();
+                break;
+            case 6:
                 deleteTask();
                 break;
             default:
@@ -136,9 +140,9 @@ public class TaskApplication {
         String newStartDateStr = keyboard.nextLine();
         System.out.print("Please enter end date (ddMMyyyy): ");
         String newEndDateStr = keyboard.nextLine();
-        System.out.print("Please enter priority: ");
+        System.out.print("Please enter priority (high, medium, low): ");
         String newPriorityStr = keyboard.nextLine();
-        System.out.print("Please enter progress: ");
+        System.out.print("Please enter progress (TO_DO, IN_PROGRESS, DONE): ");
         String newProgressStr = keyboard.nextLine();
         System.out.print("Please enter reminder days before: ");
         int newReminderDaysBefore = Integer.parseInt(keyboard.nextLine());
@@ -154,6 +158,30 @@ public class TaskApplication {
             System.out.println("Task successfully modified.");
         } else {
             System.out.println("Task modification failed.");
+        }
+    }
+
+    public static void updateProgress() {
+        System.out.println("\n=== Update Progress ===");
+        System.out.print("Please enter task ID to update progress: ");
+        String taskId = keyboard.next();
+
+        boolean taskExists = taskManager.checkIfTaskExists(taskId);
+        if(!taskExists) {
+            System.out.println("No task has found like task ID: " + taskId);
+            return;
+        }
+
+        System.out.print("Please enter progress (TO_DO, IN_PROGRESS, DONE): ");
+        String newProgressStr = keyboard.next();
+        TaskProgress newProgress = convertToTaskProgress(newProgressStr);
+
+        boolean isTaskUpdated = taskManager.updateProgress(taskId, newProgress);
+
+        if(isTaskUpdated) {
+            System.out.println("Task progress successfully updated.");
+        } else {
+            System.out.println("Task progress update failed.");
         }
     }
 

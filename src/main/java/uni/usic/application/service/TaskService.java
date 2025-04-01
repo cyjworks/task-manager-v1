@@ -70,13 +70,9 @@ public class TaskService implements TaskOperations {
     }
 
     @Override
-    public boolean updateProgress(String id, TaskProgress progress) {
-        Task task = getTaskById(id);
-        if(task == null) {
-            return false;
-        }
+    public Task updateProgress(Task task, String id, TaskProgress progress) {
         task.setProgress(progress);
-        return true;
+        return task;
     }
 
     @Override
