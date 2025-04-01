@@ -22,9 +22,9 @@ public class TaskManager {
         return taskFileRepository.loadTaskListFromFile();
     }
 
-    public void viewTask(String id) {
-        taskFileRepository.findById(id);
-    }
+//    public void viewTask(String id) {
+//        taskFileRepository.findById(id);
+//    }
 
     public Task viewTaskById(String id) {
         Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
@@ -65,21 +65,21 @@ public class TaskManager {
         return taskService.getTaskById(id, taskMap) != null;
     }
 
-    public boolean updateProgress(String id, TaskProgress progress) {
+    public Task updateProgress(String id, TaskProgress progress) {
         Map<String, Task> taskMap = taskFileRepository.loadTaskMapFromFile();
         Task taskToModify = taskService.getTaskById(id, taskMap);
         if(taskToModify==null) {
             System.out.println("No task has found like task ID: " + id);
-            return false;
+            return null;
         }
 
-        Task modifiedTask = taskService.updateProgress(taskToModify, id,  progress);
-        boolean result = taskFileRepository.update(modifiedTask);
+        Task updatedTask = taskService.updateProgress(taskToModify, id,  progress);
+        boolean result = taskFileRepository.update(updatedTask);
 
         if(result) {
-            return true;
+            return updatedTask;
         } else {
-            return false;
+            return null;
         }
     }
 
