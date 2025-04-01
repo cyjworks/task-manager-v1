@@ -176,9 +176,9 @@ public class TaskApplication {
         String newProgressStr = keyboard.next();
         TaskProgress newProgress = convertToTaskProgress(newProgressStr);
 
-        boolean isTaskUpdated = taskManager.updateProgress(taskId, newProgress);
+        Task updatedTask = taskManager.updateProgress(taskId, newProgress);
 
-        if(isTaskUpdated) {
+        if(updatedTask!=null) {
             System.out.println("Task progress successfully updated.");
         } else {
             System.out.println("Task progress update failed.");
